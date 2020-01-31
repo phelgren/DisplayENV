@@ -15,6 +15,14 @@ Change log
 
 * Initial release
 
+#### 1.0.1
+
+* Fixed a few things regarding colors displayed
+
+#### 1.0.2
+
+* Picked up a manifest change I didn't want.  Changed default color.
+
 
 Outstanding bugs
 ----------------
