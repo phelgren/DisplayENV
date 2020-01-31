@@ -7,7 +7,7 @@ function add_hover_box() {
 	hs.right = '10px';
 	hs.padding = '4px 6px';
 	hs.border = '1px solid black';
-	hs.backgroundColor = '#ff9b33';
+	hs.backgroundColor = '#c0c0c0';
 	hs.webkitBorderRadius = '12px';
 	hs.fontSize = '13px';
 	hs.fontFamily = 'arial';

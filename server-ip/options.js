@@ -192,7 +192,7 @@
 		sips.color = {};
 	}
 	if (! sips.color.defaultColor) {
-		sips.color.defaultColor = '#ff9b33';
+		sips.color.defaultColor = '#c0c0c0';
 		updateSips();
 	}
 	defaultColor.value = sips.color.defaultColor;
