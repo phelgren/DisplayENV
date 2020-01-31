@@ -7,7 +7,7 @@ function parse_url(l_url) {
 function set_badge(ip) {
 	var bdg = (ip) ? ip.substr(ip.lastIndexOf('.') + 1) : '',
 	valid_cidr = /^([0-9]{1,3}\.){3}[0-9]{1,3}(\/([0-9]|[1-2][0-9]|3[0-2]))$/,
-		bdgColor = (sips && sips.color && sips.color.defaultColor ? sips.color.defaultColor : '#ff0000'),
+		bdgColor = (sips && sips.color && sips.color.defaultColor ? sips.color.defaultColor : '#c0c0c0'),
 		matched = false,
 		mnems = JSON.parse(localStorage.getItem('mnems')) || {};
 	if (mnems[ip]) {
@@ -22,7 +22,7 @@ function set_badge(ip) {
 
 		for(selIP in mnems)
 		{
-		if(selIP.match(valid_cidr && ip)){
+		if(selIP.match(valid_cidr)){
 				// we have a CIDR value see if our IP is in it
 				if(isIp4InCidr(ip,selIP))
 				{
@@ -74,21 +74,46 @@ function getServerFromObj(mnems,ip){
 		}
 
 	if(!matched && ip!==null){
-		server = 'IP not defined';
+		server = ip;
 		for(selIP in mnems)
 		{
 		if(selIP.match(valid_cidr)){
 				// we have a CIDR value see if our IP is in it
 				if(ip!==null && isIp4InCidr(ip,selIP))
 				{
-					server = mnems[selIP].server;
-					
+						server = mnems[selIP].server;
+				}
+			}
+		}
+	}
+		return server;
+}
+
+function getColorFromObj(mnems,ip){
+
+	var valid_cidr = /^([0-9]{1,3}\.){3}[0-9]{1,3}(\/([0-9]|[1-2][0-9]|3[0-2]))$/,
+		bdgColor = '#c0c0c0', // grey background for IP addresses not configured
+		matched = false;
+		
+		if (mnems[ip]) {
+			bdgColor = mnems[ip].color || bdgColor;
+			matched = true;
+		}
+
+	if(!matched && ip!==null){
+		for(selIP in mnems)
+		{
+		if(selIP.match(valid_cidr)){
+				// we have a CIDR value see if our IP is in it
+				if(ip!==null && isIp4InCidr(ip,selIP))
+				{
+						bdgColor = mnems[selIP].color;
 				}
 			}
 		}
 	}
 
-	return server;
+		return bdgColor;
 }
 
 const ip4ToInt = ip =>
@@ -123,7 +148,7 @@ chrome.extension.onMessage.addListener(function (request, sender, response_func)
 	if (request.hasOwnProperty('load') && request.load) {
 		response.visible = sips.hb;
 		response.still = !! sips.hbStill;
-		response.color = color;
+		response.color = getColorFromObj(mnems,myIP);
 		response.myURL = myURL;
 		response.myIP = myIP;
 		response.server = getServerFromObj(mnems,myIP);

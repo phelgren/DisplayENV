@@ -122,7 +122,7 @@
 
 	function make_mnem_box (ip, mnem, color,server) {
 		var mnem_box_wrap = doc.createElement('span');
-		mnem_box_wrap.innerHTML = mnemBox.replace(/##ip##/gi, ip || '').replace(/##mnem##/gi, mnem || '').replace(/##color##/gi, color || '#ff0000').replace(/##server##/gi, server || '');
+		mnem_box_wrap.innerHTML = mnemBox.replace(/##ip##/gi, ip || '').replace(/##mnem##/gi, mnem || '').replace(/##color##/gi, color || '#c0c0c0').replace(/##server##/gi, server || '');
 		mnem_box_wrap.className = 'single-wrap';
 		wrap.appendChild(mnem_box_wrap);
 		return mnem_box_wrap;
@@ -158,7 +158,7 @@
 	// add mnemonic editor boxes to the page
 	for (i = 0; i < sortArr.length; i += 1) {
 		ipIndex = sortArr[i].ip;
-		make_mnem_box(ipIndex, mnems[ipIndex].mnem, mnems[ipIndex].color);
+		make_mnem_box(ipIndex, mnems[ipIndex].mnem, mnems[ipIndex].color,mnems[ipIndex].server);
 	}
 	// add at least one and at most 4 empty boxes
 	more_boxes = (sortArr.length >= 4 ? 1 : 4 - sortArr.length);
